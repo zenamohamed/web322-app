@@ -8,8 +8,8 @@
 *  Name: Larry Okuonghae
 *  Student ID: 145203238
 *  Date: 15-05-2024
-*  Vercel Web App URL: https://vercel.com/larry-okuonghaes-projects/web322-app
-*  GitHub Repository URL: https://github.com/Elo07/web322-app.git
+*  Vercel Web App URL: https://vercel.com/larry-okuonghaes-projects/helloworld
+*  GitHub Repository URL: https://github.com/Elo07/helloworld.git
 **/
 
 
