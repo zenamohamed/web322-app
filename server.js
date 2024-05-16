@@ -8,7 +8,7 @@
 *  Name: Larry Okuonghae
 *  Student ID: 145203238
 *  Date: 15-05-2024
-*  Vercel Web App URL: https://vercel.com/larry-okuonghaes-projects/helloworld
+*  Vercel Web App URL: https://helloworld-wine-one.vercel.app/
 *  GitHub Repository URL: https://github.com/Elo07/helloworld.git
 **/
 
