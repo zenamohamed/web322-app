@@ -1,2 +1,2 @@
 /**
-*  WEB322 - Assignment
+*  WEB322 - Assignment 1
