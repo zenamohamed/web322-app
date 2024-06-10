@@ -1,3 +1,16 @@
+/*********************************************************************************
+WEB322 – Assignment 02
+I declare that this assignment is my own work in accordance with Seneca Academic Policy.  
+No part of this assignment has been copied manually or electronically from any other source (including 3rd party web sites) or distributed to other students.
+
+Name: Larry Okuonghae
+Student ID: 145203238
+Date: 06-09-2024
+Vercel Web App URL: 
+GitHub Repository URL: https://github.com/Elo07/web322-app.git
+
+********************************************************************************/ 
+
 const path = require('path');
 const express = require('express'); // "require" the Express module
 const app = express(); // obtain the "app" object
