@@ -15,7 +15,6 @@ const path = require('path');
 const express = require('express'); // "require" the Express module
 const app = express(); // obtain the "app" object
 const storeService = require('./store-service');
-const HTTP_PORT = process.env.PORT || 8080; // assign a port
 
 app.use(express.static('public'));
 

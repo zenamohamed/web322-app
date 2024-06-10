@@ -1,59 +1,49 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 
 let items = [];
 let categories = [];
 
-const initialize = () => {
-   return new Promise((resolve, reject) => {
-      fs.readFile(path.join(__dirname, 'data', 'items.json'), 'utf8', (err, data) => {
-         if (err) {
-            reject('unable to read file');
-         } else {
-            items = JSON.parse(data);
+const initialize = async () => {
+   try {
+      // Read items.json file
+      const itemsData = await fs.readFile(path.join(__dirname, 'data', 'items.json'), 'utf8');
+      items = JSON.parse(itemsData);
 
-            fs.readFile(path.join(__dirname, 'data', 'categories.json'), 'utf8', (err, data) => {
-               if (err) {
-                  reject('unable to read file');
-               } else {
-                  categories = JSON.parse(data);
-                  resolve();
-               }
-            });
-         }
-      });
-   });
+      // Read categories.json file
+      const categoriesData = await fs.readFile(path.join(__dirname, 'data', 'categories.json'), 'utf8');
+      categories = JSON.parse(categoriesData);
+
+      console.log('Data initialized successfully');
+   } catch (err) {
+      console.error('Failed to initialize data:', err);
+      throw err; // Re-throw the error to indicate initialization failure
+   }
 };
 
 const getAllItems = () => {
-   return new Promise((resolve, reject) => {
-      if (items.length > 0) {
-         resolve(items);
-      } else {
-         reject('no results returned');
-      }
-   });
+   if (items.length > 0) {
+      return Promise.resolve(items);
+   } else {
+      return Promise.reject('No items available');
+   }
 };
 
 const getPublishedItems = () => {
-   return new Promise((resolve, reject) => {
-      const publishedItems = items.filter(item => item.published === true);
-      if (publishedItems.length > 0) {
-         resolve(publishedItems);
-      } else {
-         reject('no results returned');
-      }
-   });
+   const publishedItems = items.filter(item => item.published === true);
+   if (publishedItems.length > 0) {
+      return Promise.resolve(publishedItems);
+   } else {
+      return Promise.reject('No published items available');
+   }
 };
 
 const getCategories = () => {
-   return new Promise((resolve, reject) => {
-      if (categories.length > 0) {
-         resolve(categories);
-      } else {
-         reject('no results returned');
-      }
-   });
+   if (categories.length > 0) {
+      return Promise.resolve(categories);
+   } else {
+      return Promise.reject('No categories available');
+   }
 };
 
 module.exports = { initialize, getAllItems, getPublishedItems, getCategories };
