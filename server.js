@@ -6,7 +6,7 @@ No part of this assignment has been copied manually or electronically from any o
 Name: Larry Okuonghae
 Student ID: 145203238
 Date: 06-09-2024
-Vercel Web App URL: 
+Vercel Web App URL: https://web322-app-gules.vercel.app/
 GitHub Repository URL: https://github.com/Elo07/web322-app.git
 
 ********************************************************************************/ 
