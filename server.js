@@ -16,7 +16,8 @@ const express = require('express'); // "require" the Express module
 const app = express(); // obtain the "app" object
 const storeService = require('./store-service');
 
-app.use(express.static('public'));
+// absolute path to css so it works on vercel
+app.use(express.static(__dirname + '/public'));
 
 // Redirect root to /about
 app.get('/', (req, res) => {
@@ -63,5 +64,4 @@ app.get('/shop', (req, res) => {
        });
     })
     .catch(err => {
-       console.error(`Failed to initialize data: ${err}`);
-    });
+       
