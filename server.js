@@ -64,4 +64,5 @@ app.get('/shop', (req, res) => {
        });
     })
     .catch(err => {
-       
+       console.error(`Failed to initialize data: ${err}`);
+    });
