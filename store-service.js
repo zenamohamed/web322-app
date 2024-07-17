@@ -55,6 +55,7 @@ const addItem = (itemData) => {
            itemData.published = true;
        }
        itemData.id = items.length + 1;
+       itemData.postDate = new Date().toISOString().split('T')[0]; // Set the itemDate to the current date
        items.push(itemData);
        resolve(itemData);
    });
@@ -68,6 +69,18 @@ const getItemsByCategory = (category) => {
            resolve(itemsByCategory);
        } else {
            reject('No items found for the specified category');
+       }
+   });
+};
+
+// Function to get published items by category
+const getPublishedItemsByCategory = (category) => {
+   return new Promise((resolve, reject) => {
+       const publishedItemsByCategory = items.filter(item => item.published == true && item.category == category);
+       if (publishedItemsByCategory.length > 0) {
+           resolve(publishedItemsByCategory);
+       } else {
+           reject('No published items found for the specified category');
        }
    });
 };
@@ -97,4 +110,4 @@ const getItemById = (id) => {
    });
 };
 
-module.exports = { initialize, getAllItems, getPublishedItems, getCategories, addItem, getItemsByCategory, getItemsByMinDate, getItemById };
+module.exports = { initialize, getAllItems, getPublishedItems, getCategories, addItem, getItemsByCategory, getItemsByMinDate, getItemById, getPublishedItemsByCategory };
