@@ -1,12 +1,12 @@
 /*********************************************************************************
-*  WEB322 – Assignment 03
+*  WEB322 – Assignment 04
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part 
 *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
 *  Name: Larry Okuonghae Student ID: 145203238 Date: 07/05/2024
 *
-*  Vercel Web App URL: https://web322-app-nu.vercel.app
+*  Vercel Web App URL: https://web322-app-six-umber.vercel.app/
 * 
 *  GitHub Repository URL: https://github.com/Elo07/web322-app.git
 *
@@ -44,7 +44,6 @@ const hbs = exphbs.create({
 
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
-//app.set('views', './views');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use((req, res, next) => {
