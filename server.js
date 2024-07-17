@@ -45,6 +45,7 @@ const hbs = exphbs.create({
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
 //app.set('views', './views');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use((req, res, next) => {
     let route = req.path.substring(1);
