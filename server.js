@@ -285,6 +285,7 @@ storeService.initialize()
       const PORT = process.env.PORT || 8080;
       app.listen(PORT, () => {
          console.log(`Express http server listening on port ${PORT}`);
+         console.log(`Server is running at http://localhost:${PORT}`);
       });
    })
    .catch(err => {
