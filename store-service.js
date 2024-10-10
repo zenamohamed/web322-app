@@ -15,14 +15,16 @@ const fs = require('fs');
 const path = require('path');
 
 
-let items = [];
-let categories = [];
+var items = [];
+var categories = [];
 
 // Function to initialize the module by reading the JSON files
-function initialize() {
+const initialize = () => {
     return new Promise((resolve, reject) => {
         // Read items.json file
-        fs.readFile(path.join(__dirname, 'data', 'items.json'), 'utf8', (err, data) => {
+        const itemsPath = path.join(__dirname, 'data', 'items.json');
+        const categoriesPath = path.join(__dirname, 'data', 'categories.json');
+        fs.readFile(itemsPath, 'utf8', (err, itemsData) => {
             if (err) {
                 reject("Unable to read items.json file");
                 return;
@@ -30,14 +32,14 @@ function initialize() {
 
             try {
                 // Parse the JSON data and assign it to the items array
-                items = JSON.parse(data);
+                items = JSON.parse(itemsData);
             } catch (parseErr) {
                 reject("Error parsing items.json");
                 return;
             }
 
             // Read categories.json file only after items.json has been read successfully
-            fs.readFile(path.join(__dirname, 'data', 'categories.json'), 'utf8', (err, data) => {
+            fs.readFile(categoriesPath, 'utf8', (err, categoriesData) => {
                 if (err) {
                     reject("Unable to read categories.json file");
                     return;
@@ -45,7 +47,7 @@ function initialize() {
 
                 try {
                     // Parse the JSON data and assign it to the categories array
-                    categories = JSON.parse(data);
+                    categories = JSON.parse(categoriesData);
                 } catch (parseErr) {
                     reject("Error parsing categories.json");
                     return;
@@ -58,8 +60,10 @@ function initialize() {
     });
 }
 
+
+
 // Function to get all items
-function getAllItems() {
+const getAllItems = () =>  {
     return new Promise((resolve, reject) => {
         if (items.length === 0) {
             reject("No results returned");
@@ -70,7 +74,7 @@ function getAllItems() {
 }
 
 // Function to get published items
-function getPublishedItems() {
+const getPublishedItems = () =>  {
     return new Promise((resolve, reject) => {
         const publishedItems = items.filter(item => item.published === true);
         if (publishedItems.length === 0) {
@@ -82,7 +86,7 @@ function getPublishedItems() {
 }
 
 // Function to get all categories
-function getCategories() {
+const getCategories = () =>  {
     return new Promise((resolve, reject) => {
         if (categories.length === 0) {
             reject("No results returned");

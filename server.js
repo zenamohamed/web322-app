@@ -34,6 +34,7 @@ storeService.initialize()
         console.error(`Failed to initialize data: ${err}`);
     });
 
+    
 // static files
 // app.use(express.static(path.join(__dirname, "public")));
 
@@ -49,6 +50,7 @@ app.get('/about', (req, res) => {
 app.get('/shop', (req, res) => {
     storeService.getPublishedItems()
         .then((data) => {
+            
             res.json(data);
         })
         .catch((err) => {
