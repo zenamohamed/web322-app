@@ -12,15 +12,15 @@ Cyclic Web App URL: _______________________________________________________
 GitHub Repository URL: https://github.com/zenamohamed/web322-app.git
 ********************************************************************************/ 
 
-
-const express = require("express"); // "require" the Express module
-const fs = require('fs');
 const path = require("path");
+const express = require("express"); // "require" the Express module
+const app = express(); // obtain the "app" object
+const fs = require('fs');
 const storeService = require("./store-service");
-
-const app = express(); // obtain the "app" object\
 const HTTP_PORT = process.env.PORT || 8080;
 
+//absolute path so it works on vercel
+app.use(express.static(__dirname + '/public'));
 
 // Initialize the store-service and start the server
 // then start the server on the port and output a confirmation to the console
@@ -35,7 +35,7 @@ storeService.initialize()
     });
 
 // static files
-app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.static(path.join(__dirname, "public")));
 
 app.get('/', (req, res) => {
     res.redirect("/about");
