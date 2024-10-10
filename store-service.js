@@ -14,7 +14,7 @@ GitHub Repository URL: ______________________________________________________
 const fs = require('fs');
 const path = require('path');
 
-// Global arrays to hold data
+
 let items = [];
 let categories = [];
 
@@ -94,6 +94,8 @@ function getCategories() {
 
 // Export the functions as a module
 module.exports = {
+    items,
+    categories,
     initialize,
     getAllItems,
     getPublishedItems,
