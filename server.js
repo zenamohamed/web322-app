@@ -1,14 +1,12 @@
 /*********************************************************************************
 *  WEB322 – Assignment 04
-*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part 
-*  of this assignment has been copied manually or electronically from any other source 
-*  (including 3rd party web sites) or distributed to other students.
-* 
-*  Name: Larry Okuonghae Student ID: 145203238 Date: 07/16/2024
+*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part  of this assignment has been copied manually or electronically from any other source  (including 3rd party web sites) or distributed to other students.
+
+* Name: Zena Mohamed Student ID: 149696239 Date: 11/20/24
 *
 *  Vercel Web App URL: https://web322-app-six-umber.vercel.app/
 * 
-*  GitHub Repository URL: https://github.com/Elo07/web322-app.git
+*  GitHub Repository URL: https://github.com/zenamohamed/web322-app
 *
 ********************************************************************************/ 
 
@@ -20,6 +18,9 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
 const exphbs = require('express-handlebars');
+
+require('dotenv').config();
+
 
 // Handlebars helpers
 const hbs = exphbs.create({
@@ -54,9 +55,9 @@ app.use((req, res, next) => {
 });
 
 cloudinary.config({
-   cloud_name: 'dds0nbuc4',
-   api_key: '598547286389728',
-   api_secret: 'NY-ixOgeXCzolmOHkomP0MCVXoQ',
+   cloud_name: 'dq2bamoia',
+   api_key: '113585692115162',
+   api_secret: 'bz4leXxcle3b2FZXBjLeDkIbP_s',
    secure: true
 });
 
@@ -231,47 +232,55 @@ app.get('/items/add', (req, res) => {
 });
 
 app.post('/items/add', upload.single('featureImage'), (req, res) => {
-   if (req.file) {
-       let streamUpload = (req) => {
-           return new Promise((resolve, reject) => {
-               let stream = cloudinary.uploader.upload_stream(
-                   (error, result) => {
-                       if (result) {
-                           resolve(result);
-                       } else {
-                           reject(error);
-                       }
-                   }
-               );
+    if (req.file) {
+        // Cloudinary stream upload logic
+        let streamUpload = (req) => {
+            return new Promise((resolve, reject) => {
+                let stream = cloudinary.uploader.upload_stream((error, result) => {
+                    if (result) {
+                        resolve(result);
+                    } else {
+                        reject(error);
+                    }
+                });
+                streamifier.createReadStream(req.file.buffer).pipe(stream);
+            });
+        };
 
-               streamifier.createReadStream(req.file.buffer).pipe(stream);
-           });
-       };
+        async function upload(req) {
+            try {
+                let result = await streamUpload(req);
+                return result;
+            } catch (error) {
+                console.error("Cloudinary Upload Error:", error);
+                throw error;
+            }
+        }
 
-       async function upload(req) {
-           let result = await streamUpload(req);
-           console.log(result);
-           return result;
-       }
+        // Upload the image and process the item
+        upload(req).then((uploaded) => {
+            processItem(uploaded.url);
+        }).catch((error) => {
+            res.status(500).send("Error uploading image to Cloudinary");
+        });
+    } else {
+        // Process item without an image
+        processItem("");
+    }
 
-       upload(req).then((uploaded) => {
-           processItem(uploaded.url);
-       });
-   } else {
-       processItem("");
-   }
+    // Process the item data and save it
+    function processItem(imageUrl) {
+        req.body.featureImage = imageUrl;
 
-   function processItem(imageUrl) {
-      req.body.featureImage = imageUrl;
-      // TODO: Process the req.body and add it as a new Item before redirecting to /items
-      storeService.addItem(req.body).then((item) => {
-          res.redirect('/items');
-      }).catch((err) => {
-          res.status(500).send(err.message);
-      });
-  }
+        storeService.addItem(req.body)
+            .then(() => {
+                res.redirect('/items'); // Redirect to items list after adding
+            })
+            .catch((err) => {
+                res.status(500).send("Error adding item: " + err.message);
+            });
+    }
 });
-
  
 // Handle 404 - Page Not Found
 app.use((req, res) => {
