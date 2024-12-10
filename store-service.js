@@ -189,7 +189,7 @@ const getItemById = (id) => {
 };
 
 //Function to add Category
-const addCatergory = (categoryData) => {
+const addCategory = (categoryData) => {
   return new Promise((resolve, reject) => {
     try {
       // Convert blank values to null
@@ -258,7 +258,7 @@ module.exports = {
   getItemsByMinDate,
   getItemById,
   getPublishedItemsByCategory,
-  addCatergory,
+  addCategory,
   deleteCategoryById,
   deleteItemById
 };
