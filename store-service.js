@@ -188,26 +188,19 @@ const getItemById = (id) => {
   });
 };
 
-//Function to add Category
+//addcategory func
 const addCategory = (categoryData) => {
   return new Promise((resolve, reject) => {
-    try {
-      // Convert blank values to null
-      Object.entries(categoryData).forEach(([key, value]) => {
-        if (value === "") {
-          categoryData[key] = null;
-        }
-      });
-
-      // Attempt to create the category
-      Category.create(categoryData)
-        .then(() => resolve(categoryData))
-        .catch((err) => reject("Unable to create category"));
-    } catch (e) {
-      reject("Unable to save category");
+    if (!categoryData.category || categoryData.category.trim() === "") {
+      reject("Category name is required"); // Validation failed
+    } else {
+      Category.create(categoryData) // Attempt to create the category
+        .then((newCategory) => resolve(newCategory)) // Success
+        .catch((err) => reject("Unable to create category: " + err)); // Database error
     }
   });
 };
+
 
 // Delete category by ID
 const deleteCategoryById = (id) => {
