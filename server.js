@@ -58,11 +58,11 @@ app.use((req, res, next) => {
 });
 
 cloudinary.config({
-   cloud_name: 'dds0nbuc4',
-   api_key: '598547286389728',
-   api_secret: 'NY-ixOgeXCzolmOHkomP0MCVXoQ',
-   secure: true
-});
+    cloud_name: 'dq2bamoia',
+    api_key: '113585692115162',
+    api_secret: 'bz4leXxcle3b2FZXBjLeDkIbP_s',
+    secure: true
+ });
 
 const upload = multer(); // no { storage: storage } since we are not using disk storage
 
@@ -306,3 +306,24 @@ app.get('/items/delete/:id', (req, res) => {
         });
 });
 
+
+
+// Handle 404 - Page Not Found
+app.use((req, res) => {
+   res.status(404).render('404');
+});
+ 
+
+// Initialize store-service and start the server
+console.log("Initializing store service...");
+storeService.initialize()
+   .then(() => {
+      const PORT = process.env.PORT || 8080;
+      app.listen(PORT, () => {
+         console.log(`Express http server listening on port ${PORT}`);
+         console.log(`Server is running at http://localhost:${PORT}`);
+      });
+   })
+   .catch(err => {
+      console.error(`Failed to initialize data: ${err}`);
+   });
