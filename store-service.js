@@ -1,17 +1,15 @@
 const Sequelize = require("sequelize");
 
-
-// Database configuration
-var sequelize = new Sequelize("neondb", "neondb_owner", "aBUwGm02IHyi", {
-    host: "ep-delicate-field-a5thc8b6.us-east-2.aws.neon.tech",
-    dialect: "postgres",
-    dialectModule: require("pg"),
-    port: 5432,
-    dialectOptions: {
-      ssl: { rejectUnauthorized: false }, 
-    },
-    query: { raw: true }, 
-  });
+var sequelize = new Sequelize("SenecaDB", "SenecaDB_owner", "CbU18tMyPgTL", {
+  host: "ep-polished-glade-a5bbli2o.us-east-2.aws.neon.tech",
+  dialect: "postgres",
+  dialectModule: require('pg'),
+  port: 5432,
+  dialectOptions: {
+    ssl: { rejectUnauthorized: false },
+  },
+  query: { raw: true },
+});
 
 const Item = sequelize.define("Item", {
   body: Sequelize.TEXT,
@@ -188,19 +186,26 @@ const getItemById = (id) => {
   });
 };
 
-//addcategory func
-const addCategory = (categoryData) => {
+//Function to add Category
+const addCatergory = (categoryData) => {
   return new Promise((resolve, reject) => {
-    if (!categoryData.category || categoryData.category.trim() === "") {
-      reject("Category name is required"); // Validation failed
-    } else {
-      Category.create(categoryData) // Attempt to create the category
-        .then((newCategory) => resolve(newCategory)) // Success
-        .catch((err) => reject("Unable to create category: " + err)); // Database error
+    try {
+      // Convert blank values to null
+      Object.entries(categoryData).forEach(([key, value]) => {
+        if (value === "") {
+          categoryData[key] = null;
+        }
+      });
+
+      // Attempt to create the category
+      Category.create(categoryData)
+        .then(() => resolve(categoryData))
+        .catch((err) => reject("Unable to create category"));
+    } catch (e) {
+      reject("Unable to save category");
     }
   });
 };
-
 
 // Delete category by ID
 const deleteCategoryById = (id) => {
@@ -251,7 +256,7 @@ module.exports = {
   getItemsByMinDate,
   getItemById,
   getPublishedItemsByCategory,
-  addCategory,
+  addCatergory,
   deleteCategoryById,
   deleteItemById
 };
